@@ -15,28 +15,28 @@ Kullanılan Teknolojileri:
 - H2 Database
 
 
-# Projeyi Çalıştırma Adımları  
-## 1️. Depoyu (repository) klonlayın  
+## Projeyi Çalıştırma Adımları  
+### 1️. Depoyu (repository) klonlayın  
 ```sh
 git clone https://github.com/RBaykan/Employee_Managment_Springboot_Vaadin.git
 ```  
 
-## 2️. Proje dizinine gidin  
+### 2️. Proje dizinine gidin  
 ```sh
 cd Employee_Managment_Springboot_Vaadin
 ```  
 
-## 3️. Bağımlılıkları yükleyin ve projeyi derleyin  
+### 3️. Bağımlılıkları yükleyin ve projeyi derleyin  
 ```sh
 mvn clean install
 ```  
 
-## 4️.Uygulamayı çalıştırın  
+### 4️.Uygulamayı çalıştırın  
 ```sh
 mvn spring-boot:run
 ```  
 
-## 5️. Uygulama şimdi çalışıyor olmalıdır  
+### 5️. Uygulama şimdi çalışıyor olmalıdır  
 Açılan servis şu adreste çalışacaktır:  
  **http://localhost:8080**  
 
