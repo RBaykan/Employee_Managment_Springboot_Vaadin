@@ -18,8 +18,8 @@ public class EmployeeDTO {
     @TCValid
     private String tckn;
 
-    @NotBlank
+    @NotBlank(message = "Not Blank")
     private String firstname;
-    @NotBlank
+    @NotBlank(message = "Not Blank")
     private String lastname;
 }
