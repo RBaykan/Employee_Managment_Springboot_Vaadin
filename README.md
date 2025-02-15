@@ -1,6 +1,6 @@
 # Employee Managment Web Application
 
-#### **Proje Tanıtımı:**
+### **Proje Tanıtımı**
 Springboot ve Vaadin kullanılarak hazırlanmış bir Employee Yönetim web uygulamasıdır. İşçileri kaydetme, görüntüleme, arama, düzenleme ve silme işlemleri yapılmaktadır. 
 
 Kullanılan Teknolojileri:
@@ -15,7 +15,7 @@ Kullanılan Teknolojileri:
 - H2 Database
 
 
-### Projeyi Çalıştırma Adımları:
+### Projeyi Çalıştırma Adımları
 1️. Depoyu (repository) klonlayın  
 ```sh
 git clone https://github.com/RBaykan/Employee_Managment_Springboot_Vaadin.git
