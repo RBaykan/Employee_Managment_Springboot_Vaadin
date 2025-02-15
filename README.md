@@ -15,7 +15,7 @@ Kullanılan Teknolojileri:
 - H2 Database
 
 
-#### Projeyi Çalıştırma Adımları  
+### Projeyi Çalıştırma Adımları:
 1️. Depoyu (repository) klonlayın  
 ```sh
 git clone https://github.com/RBaykan/Employee_Managment_Springboot_Vaadin.git
@@ -44,7 +44,7 @@ Açılan servis şu adreste çalışacaktır:
  Sonra klasörü Eclipse ve IntelliJ'e aktarıp, çalıştırabileceğiniz gibi Maven ile de çalıştırabilirsiniz.
 
 
-#### **Uygulamanın Çalışma Akışı**
+### **Uygulamanın Çalışma Akışı**
 
 **`Employee` Modeli:**
 - 4 adet değişken barındırır.
@@ -94,7 +94,6 @@ Açılan servis şu adreste çalışacaktır:
 - Durumun sonucu kullanıcıya bildirilir.
 
 **İşçi arama:**
-
 - Arama için kullanılacak String, Vaadin tarafında yapılan kontrollerden sonra, `EmployeeController` modelinin arama metotuna gönderilir.
 - Bu metot işçi listesini yine `EmployeeController` modelinde çeker. 
 - Hata olursa kullanıcıya bildirilir.
@@ -102,11 +101,4 @@ Açılan servis şu adreste çalışacaktır:
 - Arama algoritması String'i keywordlere ayırır ve ona göre bir arama yapar.
 - Aramada bulunan işçiler bir listeye aktarılır ve bu liste döndürülür.
 - Bu liste eğer boş değil ise Grid'e aktarılır ve tablo oluşturulup, ekranda gösterilir.
-
-# Projeyi Çalıştırma Adımları  
-
-## 1. Depoyu (repository) klonlayın  
-```bash
-git clone https://github.com/RBaykan/Spring_Security_Register_Email_Verification_Token.git
-```
 
