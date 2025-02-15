@@ -1,51 +1,72 @@
-# My App
+#### **Proje Tanıtımı:**
+Springboot ve Vaadin kullanılarak hazırlanmış bir Employee Yönetim web uygulamasıdır. İşçileri kaydetme, görüntüleme, arama, düzenleme ve silme işlemleri yapılmaktadır. 
 
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+Kullanılan Teknolojileri:
+- Java programlama dili
+- Springboot Çatısı 
+	- RestFUL API
+	- JPA
+	- Hibernate
+	- Spring Validation
+	- JUnit
+- Vaadin
+- H2 Database
 
-## Running the application
+#### **Uygulamanın Çalışma Akışı**
 
-Open the project in an IDE. You can download the [IntelliJ community edition](https://www.jetbrains.com/idea/download) if you do not have a suitable IDE already.
-Once opened in the IDE, locate the `Application` class and run the main method using "Debug".
+**`Employee` Modeli:**
+- 4 adet değişken barındırır.
+	- ID benzersiz model olduğunu bildirir.
+	- TC Kimlik numarası, eşsiz olacağı belirtilmiştir.
+	- Ad ve Soyad işçinin diğer özellikleridir.
 
-For more information on installing in various IDEs, see [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/getting-started/import).
+**RestFUL API'ler:**
+- Gerekli CRUD operasyonlarını yapmak için RestFUL API metotları oluşturuldu.
+	- Listeleme için cache özelliği kullandığı. 
+	- Oluşturma, güncelleme ve silme istekleri olmadığı sürece işçi listesi almak için sürekli veri tabanına istek atılmayacaktır.
+	- Tüm metotlar, bir `ResponseEntity` olup, ilgili hataları inceler ve kullanıcıya bildirir.
+- Bu API metotları `EmployeeController` modelinde toplandı.
+- Vaadin ve dışarıdan gelecek istekleri için kullanıldı.
 
-If you install the Vaadin plugin for IntelliJ, you should instead launch the `Application` class using "Debug using HotswapAgent" to see updates in the Java code immediately reflected in the browser.
+**İşçi oluşturma:**
+- Vaadin ile hazırlanan UI'da, işçi oluşturmak için 3 adet girdi alanı vardır. Bu alanlara sırasıyla TC Kimlik Numarası, ad ve soyad girilmedi. 
+- Bu girdilerin nasıl doğrulacağını `EmployeeDTO` modelinde belirtildi.
+	- TCKN -> @TCValid adında annoastasyon oluşturduk. Bu annotasyon ile TC Kimlik Numarası doğrulama algoritması kullanıldı.
+	- Ad ve Soyad için -> @NotBlank annotasyonu kullanıldı.
+	- Bu annotasyonları da Vaadin'in bilmesi için, `BeanValidation` modelini kullanıldı
+- İşçi oluştururken doğrulama başarılı ise `EmployeeController` modelinin oluşturma metotuna gönderilir. 
+- TCKN, Unique bir değer ise veri tabanın kaydedilir. Değilse kullanıcıya bildirilir.
+- Başarılı değil ise hata kodları incelenir ve kullanıcıya bildirim verir.
 
-## Deploying to Production
+**İşçileri görüntüleme:**
+- Vaadin tarafından oluşturulan `Grid` nesnesine, `EmployeeController` sınıfından işçi listesi alınır. Bu liste `Grid` nesnesine aktarıldı ve bir tablo yapıldı.
+	- Listeye çekemezse eğer, ilgili hata kodları incelenir ve kullanıcıya bildirim verir.
+- Tabloda sütunlar, kullanıcının özelliklerini bildirir.
+- Tabloda satırlar, kullanıcıları listeler.
+- Kullanıcıyı düzenleme ve silme işlemleri, her kullanıcı için satır sonunda belirtildi.
 
-The project is a standard Maven project. To create a production build, call 
 
-```
-./mvnw clean package -Pproduction
-```
+**İşçileri düzenleme:**
+- Tabloda düzenlenmek için seçilen işçinin bilgileri, işçi oluşturma formuna yerleştirilir.
+- Düzenleme işlemine geçilir ve oluşturma formundaki doğrulama işlemlerine de geçerli olur.
+- Kaydedileceği zaman `EmployeeController` modelinin düzenleme metoduna gönderilir.
+- TCKN eğer aynı ise başarıyla kaydeder.
+- TCKN aynı değil fakat unique ise kayededer, 
+- TCKN aynı değil fakat unique değilse kaydetmez.
+- Durumun sonucu kullanıcıya bildirilir.
 
-If you have Maven globally installed, you can replace `./mvnw` with `mvn`.
+**İşçi silme:**
+- Tabloda silmek için seçilen işçinin ID değeri, `EmployeeController` silme metotuna bildirilir.
+- Görüntülendiği için zaten veri tabanında vardır gibi gözükebilir yalnız yine de bir kontrol işlemi gerçekleşir.
+- Eğer ID'ye göre işçi bulursa silinir, bulmazsa silinmez.
+- Durumun sonucu kullanıcıya bildirilir.
 
-This will build a JAR file with all the dependencies and front-end resources,ready to be run. The file can be found in the `target` folder after the build completes.
-You then launch the application using 
-```
-java -jar target/my-app-1.0-SNAPSHOT.jar
-```
+**İşçi arama:**
 
-## Project structure
-
-- `MainLayout.java` in `src/main/java` contains the navigation setup (i.e., the
-  side/top bar and the main menu). This setup uses
-  [App Layout](https://vaadin.com/docs/components/app-layout).
-- `views` package in `src/main/java` contains the server-side Java views of your application.
-- `views` folder in `src/main/frontend` contains the client-side JavaScript views of your application.
-- `themes` folder in `src/main/frontend` contains the custom CSS styles.
-
-## Useful links
-
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorial at [vaadin.com/docs/latest/tutorial/overview](https://vaadin.com/docs/latest/tutorial/overview).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/docs/latest/components](https://vaadin.com/docs/latest/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Build any UI without custom CSS by discovering Vaadin's set of [CSS utility classes](https://vaadin.com/docs/styling/lumo/utility-classes). 
-- Find a collection of solutions to common use cases at [cookbook.vaadin.com](https://cookbook.vaadin.com/).
-- Find add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Forum](https://vaadin.com/forum).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin).
+- Arama için kullanılacak String, Vaadin tarafında yapılan kontrollerden sonra, `EmployeeController` modelinin arama metotuna gönderilir.
+- Bu metot işçi listesini yine `EmployeeController` modelinde çeker. 
+- Hata olursa kullanıcıya bildirilir.
+- Hata olmaz ise arama için kullanılacak String ile işçi listesi, arama algoritmasını gerçekleştirecek bir alt fonksiyonuna parametre olarak gönderilir.
+- Arama algoritması String'i keywordlere ayırır ve ona göre bir arama yapar.
+- Aramada bulunan işçiler bir listeye aktarılır ve bu liste döndürülür.
+- Bu liste eğer boş değil ise Grid'e aktarılır ve tablo oluşturulup, ekranda gösterilir.
