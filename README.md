@@ -1,4 +1,4 @@
-#Employee Managment Web Application
+# Employee Managment Web Application
 
 #### **Proje Tanıtımı:**
 Springboot ve Vaadin kullanılarak hazırlanmış bir Employee Yönetim web uygulamasıdır. İşçileri kaydetme, görüntüleme, arama, düzenleme ve silme işlemleri yapılmaktadır. 
