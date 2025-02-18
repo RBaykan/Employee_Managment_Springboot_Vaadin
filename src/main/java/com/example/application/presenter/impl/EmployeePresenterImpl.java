@@ -19,6 +19,7 @@ public class EmployeePresenterImpl implements EmployeePresenter {
     Process process = Process.NO_PROCESS;
     private ObserverEmployeeViewer observerEmployeeViewer;
     private final EmployeeController employeeController;
+    Long tempID = 0L;
 
     List<EmployeeDTO> employees = new ArrayList<>();
     EmployeeDTO employeeDTO = new EmployeeDTO();
@@ -40,6 +41,9 @@ public class EmployeePresenterImpl implements EmployeePresenter {
 
     @Override
     public void load() {
+        tempID = 0L;
+        process = Process.NO_PROCESS;
+
         employees = new ArrayList<>();
         ResponseEntity<List<EmployeeDTO>> responseEntityEmployees = employeeController.getEmployees();
 
@@ -74,7 +78,7 @@ public class EmployeePresenterImpl implements EmployeePresenter {
             observerEmployeeViewer.onEmployeesLoad(employees, responseEntityEmployees.getStatusCode() + ": Unknown Error!", "red");
         }
 
-        process = Process.NO_PROCESS;
+
     }
 
     @Override
@@ -125,8 +129,9 @@ public class EmployeePresenterImpl implements EmployeePresenter {
         } else {
 
             if (process == Process.UPDATE) {
+                System.out.println(employeeDTO);
                 ResponseEntity<EmployeeDTO> updateEmployeeEmployeeResponseEntity
-                        = employeeController.updateEmployee(this.employeeDTO.getId(), this.employeeDTO);
+                        = employeeController.updateEmployee(tempID, employeeDTO);
 
                 if (updateEmployeeEmployeeResponseEntity.getStatusCode() == HttpStatus.NOT_FOUND) {
                     observerEmployeeViewer.showNotification(HttpStatus.NOT_FOUND +
@@ -163,6 +168,8 @@ public class EmployeePresenterImpl implements EmployeePresenter {
 
     }
 
+
+
     @Override
     public void update(Button edit, Button delete, EmployeeDTO employee) {
         if (process == Process.RELOAD) {
@@ -175,7 +182,7 @@ public class EmployeePresenterImpl implements EmployeePresenter {
             if (edit.getText().equals("Cancel")) {
                 observerEmployeeViewer.showNotification("Please refresh page", "error");
             } else {
-                this.employeeDTO = employee;
+                tempID = employee.getId();
                 edit.setText("Cancel");
                 edit.getStyle().set("background-color", "blue")
                         .set("color", "white");
@@ -187,13 +194,13 @@ public class EmployeePresenterImpl implements EmployeePresenter {
             }
         } else {
 
-            if (process == Process.UPDATE) {
+            if (process == Process.UPDATE && !edit.getText().equals("Cancel")) {
                 observerEmployeeViewer.showNotification("Please complete other actions", "error");
                 return;
             }
 
             process = Process.NO_PROCESS;
-            this.employeeDTO = tempEmployeeDTO;
+
             edit.setText("Edit");
             edit.getStyle().set("background-color", "green")
                     .set("color", "white");

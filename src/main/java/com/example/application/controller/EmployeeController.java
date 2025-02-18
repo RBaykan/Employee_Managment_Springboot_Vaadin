@@ -151,7 +151,7 @@ public class EmployeeController {
     }
 
 
-    @GetMapping("search")
+    @GetMapping("search/{id}")
     public ResponseEntity<List<EmployeeDTO>> searchEmployee(@RequestParam String searchText) {
 
 
