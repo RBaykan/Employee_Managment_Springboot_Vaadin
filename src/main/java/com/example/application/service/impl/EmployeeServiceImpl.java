@@ -6,6 +6,7 @@ import com.example.application.mapper.EmployeeMapper;
 import com.example.application.model.Employee;
 import com.example.application.repository.EmployeeRepository;
 import com.example.application.service.EmployeeService;
+import jakarta.transaction.Transactional;
 import javassist.NotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ return  null;
         return null;
     }
 
+    @Transactional
     @Override
     public Boolean deleteEmployee(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
@@ -62,6 +64,7 @@ return  null;
     }
 
     @Override
+    @Transactional
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         employee.setTckn(employeeDTO.getTckn());
@@ -77,6 +80,7 @@ return  null;
     }
 
     @Override
+    @Transactional
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
         Optional<Employee> employeeOP = employeeRepository.findById(id);
 
@@ -94,8 +98,12 @@ return  null;
         }
     }
 
+    @Override
+    public boolean isHaveSameTC(String tc) {
 
 
+       return employeeRepository.existsByTckn(tc);
+    }
 
 
 }

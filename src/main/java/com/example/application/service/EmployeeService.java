@@ -18,6 +18,8 @@ public interface EmployeeService {
 
     EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO);
 
+    boolean isHaveSameTC(String tc);
+
 
 
 

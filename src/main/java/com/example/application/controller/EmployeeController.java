@@ -18,16 +18,12 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
 
-
-    boolean memoryBasedProcess = false;
 
     private final EmployeeService employeeService;
 
@@ -184,6 +180,11 @@ public class EmployeeController {
                 .body(responseEntity.getBody());
 
 
+    }
+
+    public boolean isHaveSameTC(String tc){
+
+        return employeeService.isHaveSameTC(tc);
     }
 
 
